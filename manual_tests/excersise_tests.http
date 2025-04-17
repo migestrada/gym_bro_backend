@@ -1,0 +1,13 @@
+### List Exercises
+GET http://localhost:8080/api/exercises
+Accept: application/json
+
+### Create Exercise
+POST http://localhost:8080/api/exercises
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Push Up",
+  "description": "An exercise for upper body strength"
+}
