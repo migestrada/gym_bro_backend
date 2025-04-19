@@ -1,15 +1,16 @@
 package routes
 
 import (
-	"tgn-backend/controllers"
+	"gym-bro-backend/controllers"
 
 	"github.com/gin-gonic/gin"
 )
 
-func ExerciseRoutes(r *gin.RouterGroup) {
-	exercises := r.Group("/exercises")
+func ExerciseRoutes(router *gin.RouterGroup) {
+	exercises := router.Group("/exercises")
 
 	{
 		exercises.GET("/", controllers.GetExercises)
+		exercises.POST("/", controllers.CreateExercise)
 	}
 }
