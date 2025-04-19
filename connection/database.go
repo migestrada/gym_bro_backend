@@ -1,8 +1,8 @@
 package connection
 
 import (
+	"gym-bro-backend/models"
 	"log"
-	"tgn-backend/models"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
@@ -18,13 +18,20 @@ func CreateConnection() {
 		log.Fatal("DB connection failed:", err)
 	}
 
-	err = db.AutoMigrate(
+	modelsToMigrate := []interface{}{
 		&models.TrainingPlan{},
 		&models.Workout{},
-		&models.TrainingPlanWorkout{})
+		&models.Exercise{},
+		&models.Set{},
+		&models.WorkoutSession{},
+		&models.TrainingPlanWorkout{},
+	}
 
-	if err != nil {
-		log.Fatal("Error during migration:", err)
+	for _, model := range modelsToMigrate {
+		err = db.AutoMigrate(model)
+		if err != nil {
+			log.Fatal("Error during migration:", err)
+		}
 	}
 
 	DB = db
