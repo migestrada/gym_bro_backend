@@ -12,5 +12,6 @@ func ExerciseRoutes(router *gin.RouterGroup) {
 	{
 		exercises.GET("/", controllers.GetExercises)
 		exercises.POST("/", controllers.CreateExercise)
+		exercises.DELETE("/:id", controllers.DeleteExercise)
 	}
 }
