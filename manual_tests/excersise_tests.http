@@ -11,3 +11,7 @@ Accept: application/json
   "name": "Push Up",
   "description": "An exercise for upper body strength"
 }
+
+### Delete Exercise
+DELETE http://localhost:8080/api/exercises/1
+Accept: application/json
