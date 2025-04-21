@@ -15,3 +15,7 @@ Accept: application/json
 ### Delete Exercise
 DELETE http://localhost:8080/api/exercises/1
 Accept: application/json
+
+### Get Exercise
+GET http://localhost:8080/api/exercises/1
+Accept: application/json
