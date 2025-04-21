@@ -17,5 +17,15 @@ DELETE http://localhost:8080/api/exercises/1
 Accept: application/json
 
 ### Get Exercise
-GET http://localhost:8080/api/exercises/1
+GET http://localhost:8080/api/exercises/2
 Accept: application/json
+
+### Update Exercise
+PUT http://localhost:8080/api/exercises/2
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Modified Push Up 3",
+  "description": "An updated description for upper body strength exercise"
+}
