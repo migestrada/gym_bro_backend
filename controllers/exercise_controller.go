@@ -93,3 +93,21 @@ func DeleteExercise(context *gin.Context) {
 		"data":    exercise,
 	})
 }
+
+func GetExerciseByID(context *gin.Context) {
+	var exerciseId string = context.Param("id")
+
+	var exercise Exercise
+
+	if err := connection.DB.First(&exercise, exerciseId).Error; err != nil {
+		context.JSON(http.StatusNotFound, gin.H{
+			"message": "Exercise not found",
+		})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{
+		"message": "Exercise retieved successfully",
+		"data":    exercise,
+	})
+}
