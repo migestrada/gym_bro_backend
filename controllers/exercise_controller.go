@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"log"
 	"net/http"
 
 	"gym-bro-backend/connection"
@@ -40,16 +39,6 @@ func CreateExercise(context *gin.Context) {
 		context.JSON(http.StatusBadRequest, gin.H{
 			"message": "Invalid request ",
 			"error":   err.Error(),
-		})
-		return
-	}
-
-	log.Println("Database connection:", connection.DB)
-
-	// Check if the database connection is initialized
-	if connection.DB == nil {
-		context.JSON(http.StatusInternalServerError, gin.H{
-			"message": "Database connection is not initialized",
 		})
 		return
 	}
@@ -102,12 +91,48 @@ func GetExerciseByID(context *gin.Context) {
 	if err := connection.DB.First(&exercise, exerciseId).Error; err != nil {
 		context.JSON(http.StatusNotFound, gin.H{
 			"message": "Exercise not found",
+			"error":   err.Error(),
 		})
 		return
 	}
 
 	context.JSON(http.StatusOK, gin.H{
 		"message": "Exercise retieved successfully",
+		"data":    exercise,
+	})
+}
+
+func UpdateExercise(context *gin.Context) {
+	var exerciseId string = context.Param("id")
+
+	var exercise Exercise
+
+	if err := connection.DB.First(&exercise, exerciseId).Error; err != nil {
+		context.JSON(http.StatusNotFound, gin.H{
+			"message": "Exercise not found",
+		})
+		return
+	}
+
+	var updatedExercise Exercise
+	if err := context.ShouldBindJSON(&updatedExercise); err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{
+			"message": "Invalid request",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	if err := connection.DB.Model(&exercise).Updates(&updatedExercise).Error; err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Failed to update exercise",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{
+		"message": "Exercise updated successfully",
 		"data":    exercise,
 	})
 }
