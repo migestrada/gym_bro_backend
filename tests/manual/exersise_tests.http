@@ -9,7 +9,9 @@ Accept: application/json
 
 {
   "name": "Push Up",
-  "description": "An exercise for upper body strength"
+  "description": "An exercise for upper body strength",
+  "photo_url": "lksdalskldaklsd",
+  "video_url": "11111111"
 }
 
 ### Delete Exercise

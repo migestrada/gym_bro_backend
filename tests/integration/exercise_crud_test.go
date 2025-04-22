@@ -1,6 +1,7 @@
 package test
 
 import (
+	"fmt"
 	"gym-bro-backend/connection"
 	"gym-bro-backend/controllers"
 	"net/http"
@@ -12,25 +13,14 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestMain(m *testing.M) {
-	// Initialize the database connection
-	connection.CreateConnection()
-
-	// Run the tests
-	m.Run()
-}
-
 func setupRouter() *gin.Engine {
 	gin.SetMode(gin.TestMode)
 	var router *gin.Engine = gin.Default()
-	router.GET("/exercises", controllers.GetExercises)
-	router.POST("/exercises", controllers.CreateExercise)
 	return router
 }
 
 func TestGetExercises(test *testing.T) {
-	gin.SetMode(gin.TestMode)
-	var router *gin.Engine = gin.Default()
+	var router *gin.Engine = setupRouter()
 	router.GET("/exercises", controllers.GetExercises)
 
 	req, err := http.NewRequest("GET", "/exercises", nil)
@@ -47,18 +37,9 @@ func TestGetExercises(test *testing.T) {
 
 func TestCreateExercise(test *testing.T) {
 	var router *gin.Engine = setupRouter()
+	router.POST("/exercises", controllers.CreateExercise)
 
-	var testCases []struct {
-		name           string
-		payload        string
-		expectedStatus int
-		expectedBody   string
-	} = []struct {
-		name           string
-		payload        string
-		expectedStatus int
-		expectedBody   string
-	}{
+	var testCases []TestCase = []TestCase{
 		{
 			name:           "Valid Exercise",
 			payload:        `{"name": "Push-up", "description": "A basic upper body exercise."}`,
@@ -79,17 +60,54 @@ func TestCreateExercise(test *testing.T) {
 		},
 	}
 
-	for _, testCase := range testCases {
-		test.Run(testCase.name, func(test *testing.T) {
-			req, err := http.NewRequest("POST", "/exercises", strings.NewReader(testCase.payload))
-			if err != nil {
-				test.Fatal(err)
-			}
+	RunTests(test, router, "POST", "/exercises", testCases)
+}
 
-			var responseRecorder *httptest.ResponseRecorder = httptest.NewRecorder()
-			router.ServeHTTP(responseRecorder, req)
-			assert.Equal(test, testCase.expectedStatus, responseRecorder.Code)
-			assert.Contains(test, responseRecorder.Body.String(), testCase.expectedBody)
-		})
+func createTestExercise() controllers.Exercise {
+	exercise := controllers.Exercise{
+		Name:        "Push-up",
+		Description: "A basic upper body exercise.",
 	}
+
+	if err := connection.DB.Create(&exercise).Error; err != nil {
+		panic("Failed to create test exercise: " + err.Error())
+	}
+
+	return exercise
+}
+
+func TestDeleteExercise(test *testing.T) {
+	var router *gin.Engine = setupRouter()
+	router.POST("/exercises", controllers.CreateExercise)
+	router.DELETE("/exercises/:id", controllers.DeleteExercise)
+
+	var exercise controllers.Exercise = createTestExercise()
+	deleteRequest, err := http.NewRequest("DELETE", fmt.Sprintf("%s%d", "/exercises/", exercise.ID), nil)
+	if err != nil {
+		test.Fatal(err)
+	}
+
+	responseRecorder := httptest.NewRecorder()
+	router.ServeHTTP(responseRecorder, deleteRequest)
+	assert.Equal(test, http.StatusOK, responseRecorder.Code)
+	assert.Contains(test, responseRecorder.Body.String(), "Exercise deleted successfully")
+}
+
+func TestUpdateExercise(test *testing.T) {
+	var router *gin.Engine = setupRouter()
+	router.POST("/exercises", controllers.CreateExercise)
+	router.PUT("/exercises/:id", controllers.UpdateExercise)
+
+	var payload = `{"name":"Updated exercise", "description": "Updated exercise description"}`
+	var exercise controllers.Exercise = createTestExercise()
+	updateRequest, err := http.NewRequest("PUT", fmt.Sprintf("%s%d", "/exercises/", exercise.ID), strings.NewReader(payload))
+
+	if err != nil {
+		test.Fatal(err)
+	}
+
+	responseRecorder := httptest.NewRecorder()
+	router.ServeHTTP(responseRecorder, updateRequest)
+	assert.Equal(test, http.StatusOK, responseRecorder.Code)
+	assert.Contains(test, responseRecorder.Body.String(), "Exercise updated successfully")
 }
