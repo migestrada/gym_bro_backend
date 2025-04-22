@@ -12,8 +12,8 @@ type Exercise struct {
 	ID          uint   `json:"id" gorm:"primaryKey"`
 	Name        string `json:"name" binding:"required"`
 	Description string `json:"description" binding:"required"`
-	PhotoURL    string
-	VideoURL    string
+	PhotoURL    string `json:"photo_url"`
+	VideoURL    string `json:"video_url"`
 }
 
 func GetExercises(context *gin.Context) {
