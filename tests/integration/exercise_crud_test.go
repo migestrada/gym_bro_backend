@@ -13,12 +13,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func setupRouter() *gin.Engine {
-	gin.SetMode(gin.TestMode)
-	var router *gin.Engine = gin.Default()
-	return router
-}
-
 func TestGetExercises(test *testing.T) {
 	var router *gin.Engine = setupRouter()
 	router.GET("/exercises", controllers.GetExercises)

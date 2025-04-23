@@ -38,3 +38,9 @@ func RunTests(test *testing.T, router *gin.Engine, method string, path string, t
 		})
 	}
 }
+
+func setupRouter() *gin.Engine {
+	gin.SetMode(gin.TestMode)
+	var router *gin.Engine = gin.Default()
+	return router
+}
