@@ -1,0 +1,37 @@
+### List Sets
+GET http://localhost:8080/api/sets
+Accept: application/json
+
+### Create a Set
+POST http://localhost:8080/api/sets
+Content-Type: application/json
+Accept: application/json
+
+{
+  "reps": 10,
+  "rest_time": 60,
+  "weight": 20.5,
+  "weight_unit": "kg",
+  "exercise_id": 3
+}
+
+### Delete Set
+DELETE http://localhost:8080/api/sets/5
+Accept: application/json
+
+### Get Set by id
+GET http://localhost:8080/api/sets/1
+Accept: application/json
+
+### Update a Set
+PUT http://localhost:8080/api/sets/6
+Content-Type: application/json
+Accept: application/json
+
+{
+  "reps": 12,
+  "rest_time": 90,
+  "weight": 25.0,
+  "weight_unit": "kg updated",
+  "exercise_id": 3
+}
