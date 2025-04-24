@@ -2,7 +2,7 @@ package models
 
 type TrainingPlanExercise struct {
 	ID             uint `gorm:"primaryKey"`
-	Index          int
+	Order          int
 	TrainingPlanID uint
 	TrainingPlan   TrainingPlan
 	ExerciseID     uint

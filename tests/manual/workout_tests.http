@@ -1,3 +1,13 @@
 ### Get all workouts
 GET http://localhost:8080/api/workouts
 Accept: application/json
+
+### Create a new workout
+POST http://localhost:8080/api/workouts
+Content-Type: application/json
+Accept: : application/json
+
+{
+  "name": "Morning Run",
+  "order": 1
+}
