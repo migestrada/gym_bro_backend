@@ -15,3 +15,7 @@ Accept: : application/json
 ### Delete a workout
 DELETE http://localhost:8080/api/workouts/1
 Accept: application/json
+
+### Get a workout by ID
+GET http://localhost:8080/api/workouts/5
+Accept: application/json
