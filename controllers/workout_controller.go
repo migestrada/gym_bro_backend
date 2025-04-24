@@ -57,3 +57,31 @@ func CreateWorkout(context *gin.Context) {
 		"data":    newWorkout,
 	})
 }
+
+func DeleteWorkout(context *gin.Context) {
+	var workoutId string = context.Param("id")
+	var workout Workout
+
+	if err := connection.DB.First(&workout, workoutId).Error; err != nil {
+		context.JSON(http.StatusNotFound, gin.H{
+			"message": "Workout not found",
+			"error":   err.Error(),
+		})
+
+		return
+	}
+
+	if err := connection.DB.Delete(&workout).Error; err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Failed to delete workout",
+			"error":   err.Error(),
+		})
+
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{
+		"message": "Workout deleted successfully",
+		"data":    workout,
+	})
+}

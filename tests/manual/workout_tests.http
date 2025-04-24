@@ -11,3 +11,7 @@ Accept: : application/json
   "name": "Morning Run",
   "order": 1
 }
+
+### Delete a workout
+DELETE http://localhost:8080/api/workouts/1
+Accept: application/json

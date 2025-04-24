@@ -12,5 +12,6 @@ func WorkoutRoutes(router *gin.RouterGroup) {
 	{
 		workoutRouter.GET("/", controllers.GetWorkouts)
 		workoutRouter.POST("/", controllers.CreateWorkout)
+		workoutRouter.DELETE("/:id", controllers.DeleteWorkout)
 	}
 }
