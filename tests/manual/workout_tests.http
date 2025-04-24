@@ -1,0 +1,3 @@
+### Get all workouts
+GET http://localhost:8080/api/workouts
+Accept: application/json
