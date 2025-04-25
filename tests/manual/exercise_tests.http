@@ -23,7 +23,7 @@ GET http://localhost:8080/api/exercises/2
 Accept: application/json
 
 ### Update Exercise
-PUT http://localhost:8080/api/exercises/2
+PUT http://localhost:8080/api/exercises/1
 Content-Type: application/json
 Accept: application/json
 

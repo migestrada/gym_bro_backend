@@ -104,7 +104,6 @@ func GetExerciseByID(context *gin.Context) {
 
 func UpdateExercise(context *gin.Context) {
 	var exerciseId string = context.Param("id")
-
 	var exercise Exercise
 
 	if err := connection.DB.First(&exercise, exerciseId).Error; err != nil {
@@ -114,8 +113,7 @@ func UpdateExercise(context *gin.Context) {
 		return
 	}
 
-	var updatedExercise Exercise
-	if err := context.ShouldBindJSON(&updatedExercise); err != nil {
+	if err := context.ShouldBindJSON(&exercise); err != nil {
 		context.JSON(http.StatusBadRequest, gin.H{
 			"message": "Invalid request",
 			"error":   err.Error(),
@@ -123,7 +121,7 @@ func UpdateExercise(context *gin.Context) {
 		return
 	}
 
-	if err := connection.DB.Model(&exercise).Updates(&updatedExercise).Error; err != nil {
+	if err := connection.DB.Save(&exercise).Error; err != nil {
 		context.JSON(http.StatusInternalServerError, gin.H{
 			"message": "Failed to update exercise",
 			"error":   err.Error(),
