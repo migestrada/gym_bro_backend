@@ -19,3 +19,13 @@ Accept: application/json
 ### Get a workout by ID
 GET http://localhost:8080/api/workouts/5
 Accept: application/json
+
+### Update a workout
+PUT http://localhost:8080/api/workouts/5
+Content-Type: application/json
+Accept: application/json
+
+{
+  "name": "Evening Run Updated",
+  "order": 2
+}

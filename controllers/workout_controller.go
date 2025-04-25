@@ -104,3 +104,40 @@ func GetWorkoutByID(context *gin.Context) {
 		"data":    workout,
 	})
 }
+
+func UpdateWorkout(context *gin.Context) {
+	var workoutId string = context.Param("id")
+	var workout Workout
+
+	if err := connection.DB.First(&workout, workoutId).Error; err != nil {
+		context.JSON(http.StatusNotFound, gin.H{
+			"message": "Workout not found",
+			"error":   err.Error(),
+		})
+
+		return
+	}
+
+	if err := context.ShouldBindJSON(&workout); err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{
+			"message": "Invalid request",
+			"error":   err.Error(),
+		})
+
+		return
+	}
+
+	if err := connection.DB.Save(&workout).Error; err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Failed to update workout",
+			"error":   err.Error(),
+		})
+
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{
+		"message": "Workout updated successfully",
+		"data":    workout,
+	})
+}
