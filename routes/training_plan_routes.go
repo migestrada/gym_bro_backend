@@ -11,5 +11,6 @@ func TrainingPlanRoutes(router *gin.RouterGroup) {
 
 	{
 		apiGroup.GET("/", controllers.GetTrainingPlans)
+		apiGroup.GET("/:id", controllers.GetTrainingPlanByID)
 	}
 }

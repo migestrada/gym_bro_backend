@@ -1,3 +1,7 @@
 ### Get Training Plans
 GET http://localhost:8080/api/training_plans
 Accept: application/json
+
+### Get Training Plan by ID
+GET http://localhost:8080/api/training_plans/1
+Accept: application/json

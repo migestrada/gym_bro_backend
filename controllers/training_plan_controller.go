@@ -29,3 +29,21 @@ func GetTrainingPlans(context *gin.Context) {
 		"data":    trainingPlans,
 	})
 }
+
+func GetTrainingPlanByID(context *gin.Context) {
+	var trainingPlanId string = context.Param("id")
+	var trainingPlan TrainingPlan
+
+	if err := connection.DB.First(&trainingPlan, trainingPlanId).Error; err != nil {
+		context.JSON(http.StatusNotFound, gin.H{
+			"message": "Training plan not found",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{
+		"message": "Training plan retrieved successfully",
+		"data":    trainingPlan,
+	})
+}
