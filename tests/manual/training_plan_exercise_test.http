@@ -27,3 +27,7 @@ Content-Type: application/json
   "exercise_id": 1,
   "training_plan_id": 1
 }
+
+### Delete Training Plans Exercise
+DELETE http://localhost:8080/api/training_plan_exercises/4
+Accept: application/json

@@ -107,3 +107,28 @@ func UpdateTrainingPlanExercise(context *gin.Context) {
 		"data":    trainingPlanExercise,
 	})
 }
+
+func DeleteTrainingPlanExercise(context *gin.Context) {
+	var trainingPlanExercise TrainingPlanExercise
+	var trainingPlanExerciseId string = context.Param("id")
+
+	if err := connection.DB.First(&trainingPlanExercise, trainingPlanExerciseId).Error; err != nil {
+		context.JSON(http.StatusNotFound, gin.H{
+			"message": "Training plan exercise not found",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	if err := connection.DB.Delete(&trainingPlanExercise).Error; err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Failed to delete training plan exercise",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{
+		"message": "Training plan exercise deleted successfully",
+	})
+}
