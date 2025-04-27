@@ -30,3 +30,21 @@ func GetTrainingPlanExercises(context *gin.Context) {
 		"data":    trainingPlanExercises,
 	})
 }
+
+func GetTrainingPlanExerciseByID(context *gin.Context) {
+	var trainingPlanExercise TrainingPlanExercise
+	var id string = context.Param("id")
+
+	if err := connection.DB.First(&trainingPlanExercise, id).Error; err != nil {
+		context.JSON(http.StatusNotFound, gin.H{
+			"message": "Training plan exercise not found",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{
+		"message": "Training plan exercise retrieved successfully",
+		"data":    trainingPlanExercise,
+	})
+}
