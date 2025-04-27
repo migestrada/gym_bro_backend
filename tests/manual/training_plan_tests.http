@@ -15,3 +15,13 @@ Content-Type: application/json
 ### Get Training Plan by ID
 GET http://localhost:8080/api/training_plans/1
 Accept: application/json
+
+### Update Training Plan
+PUT http://localhost:8080/api/training_plans/1
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "Updated Training Plan Updated",
+  "description": "This is an updated training plan."
+}
