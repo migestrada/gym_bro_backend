@@ -48,3 +48,28 @@ func GetTrainingPlanExerciseByID(context *gin.Context) {
 		"data":    trainingPlanExercise,
 	})
 }
+
+func CreateTrainingPlanExercise(context *gin.Context) {
+	var trainingPlanExercise TrainingPlanExercise
+
+	if err := context.ShouldBindJSON(&trainingPlanExercise); err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{
+			"message": "Invalid input data",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	if err := connection.DB.Create(&trainingPlanExercise).Error; err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Failed to create training plan exercise",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	context.JSON(http.StatusCreated, gin.H{
+		"message": "Training plan exercise created successfully",
+		"data":    trainingPlanExercise,
+	})
+}

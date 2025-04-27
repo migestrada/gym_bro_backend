@@ -5,3 +5,14 @@ Accept: application/json
 ### Get Training Plans Exercise by ID
 GET http://localhost:8080/api/training_plan_exercises/1
 Accept: application/json
+
+### Create Training Plans Exercise
+POST http://localhost:8080/api/training_plan_exercises
+Accept: application/json
+Content-Type: application/json
+
+{
+  "order": 1,
+  "exercise_id": 1,
+  "training_plan_id": 1
+}
