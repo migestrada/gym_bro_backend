@@ -73,3 +73,37 @@ func CreateTrainingPlanExercise(context *gin.Context) {
 		"data":    trainingPlanExercise,
 	})
 }
+
+func UpdateTrainingPlanExercise(context *gin.Context) {
+	var trainingPlanExercise TrainingPlanExercise
+	var trainingPlanExerciseId string = context.Param("id")
+
+	if err := connection.DB.First(&trainingPlanExercise, trainingPlanExerciseId).Error; err != nil {
+		context.JSON(http.StatusNotFound, gin.H{
+			"message": "Training plan exercise not found",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	if err := context.ShouldBindJSON(&trainingPlanExercise); err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{
+			"message": "Invalid input data",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	if err := connection.DB.Save(&trainingPlanExercise).Error; err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Failed to update training plan exercise",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{
+		"message": "Training plan exercise updated successfully",
+		"data":    trainingPlanExercise,
+	})
+}

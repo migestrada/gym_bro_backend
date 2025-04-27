@@ -12,5 +12,7 @@ func TrainingPlanExerciseRoutes(router *gin.RouterGroup) {
 		apiGroup.GET("/", controllers.GetTrainingPlanExercises)
 		apiGroup.GET("/:id", controllers.GetTrainingPlanExerciseByID)
 		apiGroup.POST("/", controllers.CreateTrainingPlanExercise)
+		apiGroup.PUT("/:id", controllers.UpdateTrainingPlanExercise)
+		apiGroup.PATCH("/:id", controllers.UpdateTrainingPlanExercise)
 	}
 }
