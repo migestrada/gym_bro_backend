@@ -15,5 +15,6 @@ func TrainingPlanRoutes(router *gin.RouterGroup) {
 		apiGroup.GET("/:id", controllers.GetTrainingPlanByID)
 		apiGroup.PUT("/:id", controllers.UpdateTrainingPlan)
 		apiGroup.PATCH("/:id", controllers.UpdateTrainingPlan)
+		apiGroup.DELETE("/:id", controllers.DeleteTrainingPlan)
 	}
 }

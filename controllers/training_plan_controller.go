@@ -106,3 +106,29 @@ func UpdateTrainingPlan(context *gin.Context) {
 		"data":    trainingPlan,
 	})
 }
+
+func DeleteTrainingPlan(context *gin.Context) {
+	var trainingPlanId string = context.Param("id")
+	var trainingPlan TrainingPlan
+
+	if err := connection.DB.First(&trainingPlan, trainingPlanId).Error; err != nil {
+		context.JSON(http.StatusNotFound, gin.H{
+			"message": "Training plan not found",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	if err := connection.DB.Delete(&trainingPlan).Error; err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Failed to delete training plan",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{
+		"message": "Training plan deleted successfully",
+		"data":    trainingPlan,
+	})
+}

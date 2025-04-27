@@ -25,3 +25,7 @@ Content-Type: application/json
   "name": "Updated Training Plan Updated",
   "description": "This is an updated training plan."
 }
+
+### Delete Training Plan
+DELETE http://localhost:8080/api/training_plans/1
+Accept: application/json
