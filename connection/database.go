@@ -24,6 +24,7 @@ func CreateConnection() {
 		&models.Exercise{},
 		&models.Set{},
 		&models.WorkoutSession{},
+		&models.TrainingPlanExercise{},
 	}
 
 	for _, model := range modelsToMigrate {
