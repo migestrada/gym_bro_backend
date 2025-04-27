@@ -11,6 +11,7 @@ func TrainingPlanRoutes(router *gin.RouterGroup) {
 
 	{
 		apiGroup.GET("/", controllers.GetTrainingPlans)
+		apiGroup.POST("/", controllers.CreateTrainingPlan)
 		apiGroup.GET("/:id", controllers.GetTrainingPlanByID)
 	}
 }

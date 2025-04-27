@@ -2,6 +2,16 @@
 GET http://localhost:8080/api/training_plans
 Accept: application/json
 
+### Create Training Plan
+POST http://localhost:8080/api/training_plans
+Accept: application/json
+Content-Type: application/json
+
+{
+  "name": "New Training Plan C",
+  "description": "This is a new training plan."
+}
+
 ### Get Training Plan by ID
 GET http://localhost:8080/api/training_plans/1
 Accept: application/json

@@ -30,6 +30,31 @@ func GetTrainingPlans(context *gin.Context) {
 	})
 }
 
+func CreateTrainingPlan(context *gin.Context) {
+	var trainingPlan TrainingPlan
+
+	if err := context.ShouldBindJSON(&trainingPlan); err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{
+			"message": "Invalid input",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	if err := connection.DB.Create(&trainingPlan).Error; err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Failed to create training plan",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	context.JSON(http.StatusCreated, gin.H{
+		"message": "Training plan created successfully",
+		"data":    trainingPlan,
+	})
+}
+
 func GetTrainingPlanByID(context *gin.Context) {
 	var trainingPlanId string = context.Param("id")
 	var trainingPlan TrainingPlan
