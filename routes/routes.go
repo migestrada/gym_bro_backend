@@ -11,4 +11,5 @@ func RegisterRoutes(router *gin.Engine) {
 	WorkoutRoutes(apiGroup)
 	TrainingPlanRoutes(apiGroup)
 	TrainingPlanExerciseRoutes(apiGroup)
+	WorkoutSessionRoutes(apiGroup)
 }
