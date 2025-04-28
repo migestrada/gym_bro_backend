@@ -33,3 +33,21 @@ func GetWorkoutSessions(context *gin.Context) {
 		"data":    workoutSessions,
 	})
 }
+
+func GetWorkoutSessionByID(context *gin.Context) {
+	var workoutSession WorkoutSession
+	var workoutSessionID string = context.Param("id")
+
+	if err := connection.DB.First(&workoutSession, workoutSessionID).Error; err != nil {
+		context.JSON(http.StatusNotFound, gin.H{
+			"message": "Workout session not found",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{
+		"message": "Workout session retrieved successfully",
+		"data":    workoutSession,
+	})
+}
