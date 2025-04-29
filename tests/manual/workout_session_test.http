@@ -31,3 +31,7 @@ Content-Type: application/json
   "set_id": 2,
   "training_plan_id": 1
 }
+
+### Delete a workout session
+DELETE http://localhost:8080/api/workout_sessions/2
+Accept: application/json

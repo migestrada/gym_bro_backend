@@ -110,3 +110,29 @@ func UpdateWorkoutSession(context *gin.Context) {
 		"data":    workoutSession,
 	})
 }
+
+func DeleteWorkoutSession(context *gin.Context) {
+	var workoutSession WorkoutSession
+	var workoutSessionID string = context.Param("id")
+
+	if err := connection.DB.First(&workoutSession, workoutSessionID).Error; err != nil {
+		context.JSON(http.StatusNotFound, gin.H{
+			"message": "Workout session not found",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	if err := connection.DB.Delete(&workoutSession).Error; err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Failed to delete workout session",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{
+		"message": "Workout session deleted successfully",
+		"data":    workoutSession,
+	})
+}
