@@ -2,7 +2,6 @@ package test
 
 import (
 	"fmt"
-	"gym-bro-backend/connection"
 	"gym-bro-backend/controllers"
 	"net/http"
 	"net/http/httptest"
@@ -55,19 +54,6 @@ func TestCreateExercise(test *testing.T) {
 	}
 
 	RunTests(test, router, "POST", "/exercises", testCases)
-}
-
-func createTestExercise() controllers.Exercise {
-	exercise := controllers.Exercise{
-		Name:        "Push-up",
-		Description: "A basic upper body exercise.",
-	}
-
-	if err := connection.DB.Create(&exercise).Error; err != nil {
-		panic("Failed to create test exercise: " + err.Error())
-	}
-
-	return exercise
 }
 
 func TestDeleteExercise(test *testing.T) {

@@ -2,6 +2,7 @@ package test
 
 import (
 	"gym-bro-backend/connection"
+	"gym-bro-backend/controllers"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -43,4 +44,34 @@ func setupRouter() *gin.Engine {
 	gin.SetMode(gin.TestMode)
 	var router *gin.Engine = gin.Default()
 	return router
+}
+
+func createTestExercise() controllers.Exercise {
+	exercise := controllers.Exercise{
+		Name:        "Push-up",
+		Description: "A basic upper body exercise.",
+	}
+
+	if err := connection.DB.Create(&exercise).Error; err != nil {
+		panic("Failed to create test exercise: " + err.Error())
+	}
+
+	return exercise
+}
+
+func createTestSet() controllers.Set {
+	var exercise controllers.Exercise = createTestExercise()
+	set := controllers.Set{
+		Reps:       10,
+		RestTime:   60,
+		Weight:     70.0,
+		WeightUnit: "kg",
+		ExerciseID: exercise.ID,
+	}
+
+	if err := connection.DB.Create(&set).Error; err != nil {
+		panic("Failed to create test set: " + err.Error())
+	}
+
+	return set
 }
