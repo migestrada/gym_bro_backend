@@ -13,5 +13,7 @@ func WorkoutSessionRoutes(router *gin.RouterGroup) {
 		apiGroup.GET("/", controllers.GetWorkoutSessions)
 		apiGroup.GET("/:id", controllers.GetWorkoutSessionByID)
 		apiGroup.POST("/", controllers.CreateWorkoutSession)
+		apiGroup.PUT("/:id", controllers.UpdateWorkoutSession)
+		apiGroup.PATCH("/:id", controllers.UpdateWorkoutSession)
 	}
 }

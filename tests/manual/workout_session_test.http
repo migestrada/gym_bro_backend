@@ -18,3 +18,16 @@ Content-Type: application/json
   "set_id": 2,
   "training_plan_id": 1
 }
+
+### Update a workout session
+PUT http://localhost:8080/api/workout_sessions/2
+Accept: application/json
+Content-Type: application/json
+
+{
+  "date": "2023-11-01T10:00:00Z",
+  "workout_id": 1,
+  "exercise_id": 2,
+  "set_id": 2,
+  "training_plan_id": 1
+}
