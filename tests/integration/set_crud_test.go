@@ -64,3 +64,22 @@ func TestGetSetByID(test *testing.T) {
 	assert.Equal(test, http.StatusOK, responseRecorder.Code)
 	assert.Contains(test, responseRecorder.Body.String(), "Set retrieved successfully")
 }
+
+func TestDeleteSet(test *testing.T) {
+	var router *gin.Engine = setupRouter()
+	router.POST("/sets", controllers.CreateSet)
+	router.DELETE("/sets/:id", controllers.DeleteSet)
+
+	var set controllers.Set = createTestSet()
+
+	req, err := http.NewRequest("DELETE", "/sets/"+fmt.Sprint(set.ID), nil)
+
+	if err != nil {
+		test.Fatal(err)
+	}
+
+	var responseRecorder *httptest.ResponseRecorder = httptest.NewRecorder()
+	router.ServeHTTP(responseRecorder, req)
+	assert.Equal(test, http.StatusOK, responseRecorder.Code)
+	assert.Contains(test, responseRecorder.Body.String(), "Set deleted successfully")
+}
