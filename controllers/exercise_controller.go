@@ -97,7 +97,7 @@ func GetExerciseByID(context *gin.Context) {
 	}
 
 	context.JSON(http.StatusOK, gin.H{
-		"message": "Exercise retieved successfully",
+		"message": "Exercise retrieved successfully",
 		"data":    exercise,
 	})
 }
