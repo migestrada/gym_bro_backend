@@ -5,3 +5,16 @@ Accept: application/json
 ### Get workout session by ID
 GET http://localhost:8080/api/workout_sessions/1
 Accept: application/json
+
+### Create a new workout session
+POST http://localhost:8080/api/workout_sessions
+Accept: application/json
+Content-Type: application/json
+
+{
+  "date": "2023-10-01T10:00:00Z",
+  "workout_id": 1,
+  "exercise_id": 2,
+  "set_id": 2,
+  "training_plan_id": 1
+}

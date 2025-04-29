@@ -51,3 +51,28 @@ func GetWorkoutSessionByID(context *gin.Context) {
 		"data":    workoutSession,
 	})
 }
+
+func CreateWorkoutSession(context *gin.Context) {
+	var newWorkoutSession WorkoutSession
+
+	if err := context.ShouldBindJSON(&newWorkoutSession); err != nil {
+		context.JSON(http.StatusBadRequest, gin.H{
+			"message": "Invalid request",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	if err := connection.DB.Create(&newWorkoutSession).Error; err != nil {
+		context.JSON(http.StatusInternalServerError, gin.H{
+			"message": "Failed to create workout session",
+			"error":   err.Error(),
+		})
+		return
+	}
+
+	context.JSON(http.StatusOK, gin.H{
+		"message": "Workout session created successfully",
+		"data":    newWorkoutSession,
+	})
+}
