@@ -83,3 +83,22 @@ func TestDeleteSet(test *testing.T) {
 	assert.Equal(test, http.StatusOK, responseRecorder.Code)
 	assert.Contains(test, responseRecorder.Body.String(), "Set deleted successfully")
 }
+
+func TestUpdateSet(test *testing.T) {
+	var router *gin.Engine = setupRouter()
+	router.POST("/sets", controllers.CreateSet)
+	router.PUT("/sets/:id", controllers.UpdateSet)
+
+	var set controllers.Set = createTestSet()
+
+	req, err := http.NewRequest("PUT", "/sets/"+fmt.Sprint(set.ID), strings.NewReader(`{"reps": 2, "rest_time": 2, "weight": 2, "weight_unit": "kg"}`))
+
+	if err != nil {
+		test.Fatal(err)
+	}
+
+	var responseRecorder *httptest.ResponseRecorder = httptest.NewRecorder()
+	router.ServeHTTP(responseRecorder, req)
+	assert.Equal(test, http.StatusOK, responseRecorder.Code)
+	assert.Contains(test, responseRecorder.Body.String(), "Set updated successfully")
+}
