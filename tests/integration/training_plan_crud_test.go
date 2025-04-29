@@ -1,6 +1,7 @@
 package test
 
 import (
+	"fmt"
 	"gym-bro-backend/controllers"
 	"net/http"
 	"net/http/httptest"
@@ -23,4 +24,21 @@ func TestGetTrainingPlans(test *testing.T) {
 	router.ServeHTTP(responseRecorder, req)
 	assert.Equal(test, http.StatusOK, responseRecorder.Code)
 	assert.Contains(test, responseRecorder.Body.String(), "Training plans retrieved successfully")
+}
+
+func TestGetTrainingPlanByID(test *testing.T) {
+	var router *gin.Engine = setupRouter()
+	router.GET("/training-plans/:id", controllers.GetTrainingPlanByID)
+
+	var trainingPlan controllers.TrainingPlan = createTestTrainingPlan()
+	req, err := http.NewRequest("GET", "/training-plans/"+fmt.Sprint(trainingPlan.ID), nil)
+
+	if err != nil {
+		test.Fatal(err)
+	}
+
+	var responseRecorder *httptest.ResponseRecorder = httptest.NewRecorder()
+	router.ServeHTTP(responseRecorder, req)
+	assert.Equal(test, http.StatusOK, responseRecorder.Code)
+	assert.Contains(test, responseRecorder.Body.String(), "Training plan retrieved successfully")
 }

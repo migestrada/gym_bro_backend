@@ -75,3 +75,16 @@ func createTestSet() controllers.Set {
 
 	return set
 }
+
+func createTestTrainingPlan() controllers.TrainingPlan {
+	var trainingPlan controllers.TrainingPlan = controllers.TrainingPlan{
+		Name:        "Full Body Workout",
+		Description: "A comprehensive workout plan.",
+	}
+
+	if err := connection.DB.Create(&trainingPlan).Error; err != nil {
+		panic("Failed to create test training plan: " + err.Error())
+	}
+
+	return trainingPlan
+}
