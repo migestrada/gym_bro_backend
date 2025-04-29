@@ -80,7 +80,7 @@ func createTestSet() controllers.Set {
 
 func createTestTrainingPlan() controllers.TrainingPlan {
 	var trainingPlan controllers.TrainingPlan = controllers.TrainingPlan{
-		Name:        "Full Body Workout" + fmt.Sprintf("%d", time.Now().Unix()),
+		Name:        "Full Body Workout" + fmt.Sprintf("%d", time.Now().UnixMilli()),
 		Description: "A comprehensive workout plan.",
 	}
 

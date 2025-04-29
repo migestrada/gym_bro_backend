@@ -77,3 +77,20 @@ func TestDeleteTrainingPlan(test *testing.T) {
 	assert.Equal(test, http.StatusOK, responseRecorder.Code)
 	assert.Contains(test, responseRecorder.Body.String(), "Training plan deleted successfully")
 }
+
+func TestUpdateTrainingPlan(test *testing.T) {
+	var router *gin.Engine = setupRouter()
+	router.PUT("/training-plans/:id", controllers.UpdateTrainingPlan)
+
+	var trainingPlan controllers.TrainingPlan = createTestTrainingPlan()
+	req, err := http.NewRequest("PUT", "/training-plans/"+fmt.Sprint(trainingPlan.ID), strings.NewReader(`{"name": "Updated Training Plan`+fmt.Sprintf("%d", time.Now().UnixMilli())+`", "description": "This is an updated test training plan"}`))
+
+	if err != nil {
+		test.Fatal(err)
+	}
+
+	var responseRecorder *httptest.ResponseRecorder = httptest.NewRecorder()
+	router.ServeHTTP(responseRecorder, req)
+	assert.Equal(test, http.StatusOK, responseRecorder.Code)
+	assert.Contains(test, responseRecorder.Body.String(), "Training plan updated successfully")
+}
