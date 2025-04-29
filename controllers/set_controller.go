@@ -51,7 +51,7 @@ func CreateSet(context *gin.Context) {
 		return
 	}
 
-	context.JSON(http.StatusOK, gin.H{
+	context.JSON(http.StatusCreated, gin.H{
 		"message": "Set created successfully",
 		"data":    newSet,
 	})
@@ -101,7 +101,7 @@ func GetSetByID(context *gin.Context) {
 	}
 
 	context.JSON(http.StatusOK, gin.H{
-		"message": "Set retieved successfully",
+		"message": "Set retrieved successfully",
 		"data":    set,
 	})
 }
