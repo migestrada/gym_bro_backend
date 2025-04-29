@@ -1,9 +1,11 @@
 package test
 
 import (
+	"fmt"
 	"gym-bro-backend/controllers"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"github.com/gin-gonic/gin"
@@ -24,4 +26,41 @@ func TestGetSets(test *testing.T) {
 	router.ServeHTTP(responseRecorder, req)
 	assert.Equal(test, http.StatusOK, responseRecorder.Code)
 	assert.Contains(test, responseRecorder.Body.String(), "Sets retrieved successfully")
+}
+
+func TestCreateTest(test *testing.T) {
+	var router *gin.Engine = setupRouter()
+	router.POST("/sets", controllers.CreateSet)
+	router.POST("/exercises", controllers.CreateExercise)
+	var exercise controllers.Exercise = createTestExercise()
+
+	req, err := http.NewRequest("POST", "/sets", strings.NewReader(`{"reps": 1, "rest_time": 1, "weight": 1, "weight_unit": "kg", "exercise_id": `+fmt.Sprint(exercise.ID)+`}`))
+
+	if err != nil {
+		test.Fatal(err)
+	}
+
+	var responseRecorder *httptest.ResponseRecorder = httptest.NewRecorder()
+	router.ServeHTTP(responseRecorder, req)
+	assert.Equal(test, http.StatusCreated, responseRecorder.Code)
+	assert.Contains(test, responseRecorder.Body.String(), "Set created successfully")
+}
+
+func TestGetSetByID(test *testing.T) {
+	var router *gin.Engine = setupRouter()
+	router.POST("/sets", controllers.CreateSet)
+	router.GET("/sets/:id", controllers.GetSetByID)
+
+	var set controllers.Set = createTestSet()
+
+	req, err := http.NewRequest("GET", "/sets/"+fmt.Sprint(set.ID), nil)
+
+	if err != nil {
+		test.Fatal(err)
+	}
+
+	var responseRecorder *httptest.ResponseRecorder = httptest.NewRecorder()
+	router.ServeHTTP(responseRecorder, req)
+	assert.Equal(test, http.StatusOK, responseRecorder.Code)
+	assert.Contains(test, responseRecorder.Body.String(), "Set retrieved successfully")
 }
