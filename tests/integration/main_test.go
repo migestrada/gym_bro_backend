@@ -1,12 +1,14 @@
 package test
 
 import (
+	"fmt"
 	"gym-bro-backend/connection"
 	"gym-bro-backend/controllers"
 	"net/http"
 	"net/http/httptest"
 	"strings"
 	"testing"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"github.com/stretchr/testify/assert"
@@ -78,7 +80,7 @@ func createTestSet() controllers.Set {
 
 func createTestTrainingPlan() controllers.TrainingPlan {
 	var trainingPlan controllers.TrainingPlan = controllers.TrainingPlan{
-		Name:        "Full Body Workout",
+		Name:        "Full Body Workout" + fmt.Sprintf("%d", time.Now().Unix()),
 		Description: "A comprehensive workout plan.",
 	}
 
