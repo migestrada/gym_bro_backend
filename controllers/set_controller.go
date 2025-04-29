@@ -27,7 +27,7 @@ func GetSets(context *gin.Context) {
 	}
 
 	context.JSON(http.StatusOK, gin.H{
-		"message": "Sets retieved successfully",
+		"message": "Sets retrieved successfully",
 		"data":    sets,
 	})
 }
