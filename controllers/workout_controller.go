@@ -8,9 +8,10 @@ import (
 )
 
 type Workout struct {
-	ID    int    `json:"id" grom:"primaryKey"`
-	Name  string `json:"name" binding:"required"`
-	Order int    `json:"order" binding:"required"`
+	ID             int    `json:"id" grom:"primaryKey"`
+	Name           string `json:"name" binding:"required"`
+	Order          int    `json:"order" binding:"required"`
+	TrainingPlanID int    `json:"training_plan_id" binding:"required"`
 }
 
 func GetWorkouts(context *gin.Context) {

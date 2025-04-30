@@ -8,8 +8,9 @@ Content-Type: application/json
 Accept: : application/json
 
 {
-  "name": "Morning Run",
-  "order": 1
+  "name": "Morning Run 2",
+  "order": 1,
+  "training_plan_id": 1
 }
 
 ### Delete a workout
@@ -27,5 +28,6 @@ Accept: application/json
 
 {
   "name": "Evening Run Updated",
-  "order": 2
+  "order": 2,
+  "training_plan_id": 1
 }

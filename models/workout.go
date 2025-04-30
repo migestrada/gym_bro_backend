@@ -3,10 +3,12 @@ package models
 import "time"
 
 type Workout struct {
-	ID              int              `grom:"primaryKey"`
-	Order           int              `gorm:"unique;not null"`
-	Name            string           `gorm:"unique;not null"`
+	ID              int              `gorm:"primaryKey"`
+	Order           int              `gorm:"not null;uniqueIndex:idx_training_plan_order,composite:order_plan"`
+	Name            string           `gorm:"not null"`
 	WorkoutSessions []WorkoutSession `gorm:"foreignKey:WorkoutID"`
+	TrainingPlanID  uint             `gorm:"not null;uniqueIndex:idx_training_plan_order,composite:order_plan"`
+	TrainingPlan    TrainingPlan     `gorm:"foreignKey:TrainingPlanID"`
 	CreatedAt       time.Time
 	UpdatedAt       time.Time
 }
