@@ -1,0 +1,33 @@
+### Get Workouts Exercise
+GET http://localhost:8080/api/workout_exercises
+Accept: application/json
+
+### Get Workouts Exercise by ID
+GET http://localhost:8080/api/workout_exercises/1
+Accept: application/json
+
+### Create Workouts Exercise
+POST http://localhost:8080/api/workout_exercises
+Accept: application/json
+Content-Type: application/json
+
+{
+  "order": 1,
+  "exercise_id": 1,
+  "workout_id": 1
+}
+
+### Update Workouts Exercise
+PUT http://localhost:8080/api/workout_exercises/4
+Accept: application/json
+Content-Type: application/json
+
+{
+  "order": 1,
+  "exercise_id": 1,
+  "workout_id": 1
+}
+
+### Delete Workouts Exercise
+DELETE http://localhost:8080/api/workout_exercises/4
+Accept: application/json
