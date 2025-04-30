@@ -90,3 +90,19 @@ func createTestTrainingPlan() controllers.TrainingPlan {
 
 	return trainingPlan
 }
+
+func createTestWorkout() controllers.Workout {
+	var trainingPlan controllers.TrainingPlan = createTestTrainingPlan()
+
+	var workout controllers.Workout = controllers.Workout{
+		Name:           "Leg Day " + fmt.Sprintf("%d", time.Now().UnixMilli()),
+		Order:          1,
+		TrainingPlanID: trainingPlan.ID,
+	}
+
+	if err := connection.DB.Create(&workout).Error; err != nil {
+		panic("Failed to create test workout: " + err.Error())
+	}
+
+	return workout
+}
