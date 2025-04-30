@@ -106,3 +106,20 @@ func createTestWorkout() controllers.Workout {
 
 	return workout
 }
+
+func createTestWorkoutExercise() controllers.WorkoutExercise {
+	var workout controllers.Workout = createTestWorkout()
+	var exercise controllers.Exercise = createTestExercise()
+
+	var workoutExercise controllers.WorkoutExercise = controllers.WorkoutExercise{
+		WorkoutID:  workout.ID,
+		ExerciseID: exercise.ID,
+		Order:      1,
+	}
+
+	if err := connection.DB.Create(&workoutExercise).Error; err != nil {
+		panic("Failed to create test workout exercise: " + err.Error())
+	}
+
+	return workoutExercise
+}
