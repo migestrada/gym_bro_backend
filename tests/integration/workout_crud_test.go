@@ -5,6 +5,7 @@ import (
 	"gym-bro-backend/controllers"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 
 	"github.com/gin-gonic/gin"
@@ -58,4 +59,21 @@ func TestDeleteWorkout(test *testing.T) {
 	router.ServeHTTP(responseRecorder, req)
 	assert.Equal(test, http.StatusOK, responseRecorder.Code)
 	assert.Contains(test, responseRecorder.Body.String(), "Workout deleted successfully")
+}
+
+func TestCreateWorkout(test *testing.T) {
+	var router *gin.Engine = setupRouter()
+	router.POST("/workouts", controllers.CreateWorkout)
+
+	var trainingPlan controllers.TrainingPlan = createTestTrainingPlan()
+	req, err := http.NewRequest("POST", "/workouts", strings.NewReader(`{"name": "Test Workout", "description": "Test Workout Description", "order": 1, "training_plan_id": `+fmt.Sprint(trainingPlan.ID)+`}`))
+
+	if err != nil {
+		test.Fatal(err)
+	}
+
+	var responseRecorder *httptest.ResponseRecorder = httptest.NewRecorder()
+	router.ServeHTTP(responseRecorder, req)
+	assert.Equal(test, http.StatusCreated, responseRecorder.Code)
+	assert.Contains(test, responseRecorder.Body.String(), "Workout created successfully")
 }
