@@ -53,7 +53,7 @@ func CreateWorkout(context *gin.Context) {
 		return
 	}
 
-	context.JSON(http.StatusOK, gin.H{
+	context.JSON(http.StatusCreated, gin.H{
 		"message": "Workout created successfully",
 		"data":    newWorkout,
 	})
