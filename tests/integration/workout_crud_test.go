@@ -77,3 +77,20 @@ func TestCreateWorkout(test *testing.T) {
 	assert.Equal(test, http.StatusCreated, responseRecorder.Code)
 	assert.Contains(test, responseRecorder.Body.String(), "Workout created successfully")
 }
+
+func TestUpdateWorkout(test *testing.T) {
+	var router *gin.Engine = setupRouter()
+	router.PUT("/workouts/:id", controllers.UpdateWorkout)
+
+	var workout controllers.Workout = createTestWorkout()
+	req, err := http.NewRequest("PUT", "/workouts/"+fmt.Sprint(workout.ID), strings.NewReader(`{"name": "Updated Workout", "description": "Updated Workout Description", "order": 2}`))
+
+	if err != nil {
+		test.Fatal(err)
+	}
+
+	var responseRecorder *httptest.ResponseRecorder = httptest.NewRecorder()
+	router.ServeHTTP(responseRecorder, req)
+	assert.Equal(test, http.StatusOK, responseRecorder.Code)
+	assert.Contains(test, responseRecorder.Body.String(), "Workout updated successfully")
+}
