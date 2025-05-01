@@ -89,3 +89,20 @@ func TestUpdateWorkoutSession(testing *testing.T) {
 	assert.Equal(testing, http.StatusOK, responseRecorder.Code)
 	assert.Contains(testing, responseRecorder.Body.String(), "Workout session updated successfully")
 }
+
+func TestDeleteWorkoutSession(testing *testing.T) {
+	var router *gin.Engine = setupRouter()
+	router.DELETE("/workout_sessions/:id", controllers.DeleteWorkoutSession)
+
+	var workoutSession controllers.WorkoutSession = createTestWorkoutSession()
+
+	req, err := http.NewRequest("DELETE", "/workout_sessions/"+fmt.Sprint(workoutSession.ID), nil)
+	if err != nil {
+		testing.Fatal(err)
+	}
+
+	var responseRecorder *httptest.ResponseRecorder = httptest.NewRecorder()
+	router.ServeHTTP(responseRecorder, req)
+	assert.Equal(testing, http.StatusOK, responseRecorder.Code)
+	assert.Contains(testing, responseRecorder.Body.String(), "Workout session deleted successfully")
+}
