@@ -122,3 +122,20 @@ func createTestWorkoutExercise() controllers.WorkoutExercise {
 
 	return workoutExercise
 }
+
+func createTestWorkoutSession() controllers.WorkoutSession {
+	var workoutExercise controllers.WorkoutExercise = createTestWorkoutExercise()
+	var set controllers.Set = createTestSet()
+
+	var workoutSession controllers.WorkoutSession = controllers.WorkoutSession{
+		Date:              time.Now(),
+		WorkoutExerciseID: workoutExercise.ID,
+		SetID:             set.ID,
+	}
+
+	if err := connection.DB.Create(&workoutSession).Error; err != nil {
+		panic("Failed to create test workout session: " + err.Error())
+	}
+
+	return workoutSession
+}
