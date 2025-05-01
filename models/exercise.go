@@ -8,7 +8,6 @@ type Exercise struct {
 	VideoURL         string `json:"video_url"`
 	CreatedAt        int64
 	UpdatedAt        int64
-	WorkoutSessions  []WorkoutSession  `gorm:"foreignKey:ExerciseID"`
 	Sets             []Set             `gorm:"foreignKey:ExerciseID"`
 	WorkoutExercises []WorkoutExercise `gorm:"foreignKey:ExerciseID"`
 }

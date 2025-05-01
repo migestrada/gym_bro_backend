@@ -10,7 +10,7 @@ type Set struct {
 	WeightUnit      string
 	CreatedAt       time.Time
 	UpdatedAt       time.Time
-	WorkoutSessions []WorkoutSession `gorm:"foreignKey:SetID"`
 	ExerciseID      uint
 	Exercise        Exercise
+	WorkoutSessions []WorkoutSession `gorm:"foreignKey:SetID"`
 }
