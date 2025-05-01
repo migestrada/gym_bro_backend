@@ -9,12 +9,10 @@ import (
 )
 
 type WorkoutSession struct {
-	ID             uint      `json:"id" gorm:"primaryKey"`
-	Date           time.Time `json:"date" binding:"required"`
-	WorkoutID      uint      `json:"workout_id" binding:"required"`
-	ExerciseID     uint      `json:"exercise_id" binding:"required"`
-	SetID          uint      `json:"set_id" binding:"required"`
-	TrainingPlanID uint      `json:"training_plan_id" binding:"required"`
+	ID                uint      `json:"id" gorm:"primaryKey"`
+	Date              time.Time `json:"date" binding:"required"`
+	WorkoutExerciseID uint      `json:"workout_exercise_id" binding:"required"`
+	SetID             uint      `json:"set_id" binding:"required"`
 }
 
 func GetWorkoutSessions(context *gin.Context) {
