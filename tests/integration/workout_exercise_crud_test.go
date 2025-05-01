@@ -74,3 +74,18 @@ func TestUpdateWorkoutExercise(test *testing.T) {
 	assert.Equal(test, http.StatusOK, responseRecorder.Code)
 	assert.Contains(test, responseRecorder.Body.String(), "Workout exercise updated successfully")
 }
+
+func TestDeleteWorkoutExercise(test *testing.T) {
+	var router *gin.Engine = setupRouter()
+	router.DELETE("/workout_exercises/:id", controllers.DeleteWorkoutExercise)
+
+	var workoutExercise controllers.WorkoutExercise = createTestWorkoutExercise()
+	req, err := http.NewRequest("DELETE", "/workout_exercises/"+fmt.Sprint(workoutExercise.ID), nil)
+	if err != nil {
+		test.Fatal(err)
+	}
+	var responseRecorder *httptest.ResponseRecorder = httptest.NewRecorder()
+	router.ServeHTTP(responseRecorder, req)
+	assert.Equal(test, http.StatusOK, responseRecorder.Code)
+	assert.Contains(test, responseRecorder.Body.String(), "Workout exercise deleted successfully")
+}
