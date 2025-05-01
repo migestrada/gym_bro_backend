@@ -114,7 +114,6 @@ func createTestWorkoutExercise() controllers.WorkoutExercise {
 	var workoutExercise controllers.WorkoutExercise = controllers.WorkoutExercise{
 		WorkoutID:  workout.ID,
 		ExerciseID: exercise.ID,
-		Order:      1,
 	}
 
 	if err := connection.DB.Create(&workoutExercise).Error; err != nil {

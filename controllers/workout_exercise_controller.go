@@ -9,7 +9,6 @@ import (
 
 type WorkoutExercise struct {
 	ID         uint `gorm:"primaryKey"`
-	Order      int  `json:"order" binding:"required"`
 	WorkoutID  uint `json:"workout_id" binding:"required"`
 	ExerciseID uint `json:"exercise_id" binding:"required"`
 }
