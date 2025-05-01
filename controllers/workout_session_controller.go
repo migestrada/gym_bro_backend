@@ -69,7 +69,7 @@ func CreateWorkoutSession(context *gin.Context) {
 		return
 	}
 
-	context.JSON(http.StatusOK, gin.H{
+	context.JSON(http.StatusCreated, gin.H{
 		"message": "Workout session created successfully",
 		"data":    newWorkoutSession,
 	})
